@@ -1,2 +1,2 @@
-# Johan-and-Erik
-Research paper collaboration
+# Research paper collaboration
+
