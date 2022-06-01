@@ -3,7 +3,9 @@ import Pkg
 using Combinatorics, DataFrames, LinearAlgebra, StatsBase, Base.Threads, Octavian
 
 function DAG_space_gen(n)
-    nthreads = Threads.nthreads()
+    @assert n > 1 "Generates all possible DAGs for n > 1"
+
+    nthreads = convert(Int, 2^(floor(log2(Threads.nthreads()))))
 
     m = binomial(n, 2)
     choices = repeat(collect.([0:1]), m)
@@ -11,31 +13,32 @@ function DAG_space_gen(n)
     nchoices = 2^m
     pvertex = permutations(1:n) |> collect
     npvertex = factorial(n)
+    
+    nthreads = nthreads >= nchoices ? nthreads = 1 : nthreads
+    multiple = convert(Int, nchoices / nthreads)
+
     idmatrix = [[convert.(Int8, Matrix(1I, n, n))] for _ in 1:nthreads]
     adjc_matrix = [[convert.(Int8, Matrix(0I, n, n))] for _ in 1:nthreads]
 
-    multiple = convert(Int, nchoices / nthreads)
     bins = Matrix[]
-    for q in 1:multiple
+    for q in 1:nthreads
         if size(bins, 1) < 1
-            push!(bins, [2 (multiple * q)])
+            push!(bins, [1 (multiple * q)])
         else
-            push!(bins, [(bins[q-1][2]+1) (multiple * q)])
+            push!(bins, [(bins[q-1][2]+1) (multiple * (q))])
         end
     end
 
-    @threads for a in 1:nthreads
-        #println(Threads.threadid())
-        threadID = Threads.threadid()
+    @threads for t in 1:nthreads
+        threadID = nthreads > 1 ? Threads.threadid() : 1
 
         for i in bins[threadID][1]:bins[threadID][2]
-            base_matrix = convert.(Int8, fill(99, (n, n)))
-            upper_triangle = LowerTriangular(base_matrix) .== 0
+            base_matrix = convert.(Int8, fill(0, (n, n)))
+            z = reshape(repeat(1:n, n), (n, n,))
+            upper_triangle = z .< z'
             base_matrix[upper_triangle] = collect(choices[i, :])
-            replace!(base_matrix, 99 => 0)
 
             for j in 1:npvertex
-                #candidate = idmatrix[threadID][][:, pvertex[j]] * base_matrix * idmatrix[threadID][][pvertex[j], :]
                 candidate = matmul!(idmatrix[threadID][][:, pvertex[j]], base_matrix, idmatrix[threadID][][pvertex[j], :])
                 push!(adjc_matrix[threadID], candidate)
             end
@@ -45,7 +48,4 @@ function DAG_space_gen(n)
     return unique(reduce(vcat, adjc_matrix))
 end
 
-for i in 2:
-
 @time x = DAG_space_gen(5)
-
