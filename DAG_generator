@@ -20,15 +20,11 @@ function DAG_space_gen(n)
     idmatrix = [[convert.(Int8, Matrix(1I, n, n))] for _ in 1:nthreads]
     adjc_matrix = [[convert.(Int8, Matrix(0I, n, n))] for _ in 1:nthreads]
 
-    chunks = Matrix[]
-    for q in 1:nthreads
-        if size(chunks, 1) < 1
-            push!(chunks, [1 (multiple * q)])
-        else
+    chunks = Matrix[[1 multiple]]
+    for q in 2:nthreads
             push!(chunks, [(chunks[q-1][2]+1) (multiple * (q))])
-        end
     end
-
+    
     @threads for t in 1:nthreads
         threadID = nthreads > 1 ? Threads.threadid() : 1
 
