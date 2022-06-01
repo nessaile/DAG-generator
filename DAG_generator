@@ -20,19 +20,19 @@ function DAG_space_gen(n)
     idmatrix = [[convert.(Int8, Matrix(1I, n, n))] for _ in 1:nthreads]
     adjc_matrix = [[convert.(Int8, Matrix(0I, n, n))] for _ in 1:nthreads]
 
-    bins = Matrix[]
+    chunks = Matrix[]
     for q in 1:nthreads
-        if size(bins, 1) < 1
-            push!(bins, [1 (multiple * q)])
+        if size(chunks, 1) < 1
+            push!(chunks, [1 (multiple * q)])
         else
-            push!(bins, [(bins[q-1][2]+1) (multiple * (q))])
+            push!(chunks, [(chunks[q-1][2]+1) (multiple * (q))])
         end
     end
 
     @threads for t in 1:nthreads
         threadID = nthreads > 1 ? Threads.threadid() : 1
 
-        for i in bins[threadID][1]:bins[threadID][2]
+        for i in chunks[threadID][1]:chunks[threadID][2]
             base_matrix = convert.(Int8, fill(0, (n, n)))
             z = reshape(repeat(1:n, n), (n, n,))
             upper_triangle = z .< z'
