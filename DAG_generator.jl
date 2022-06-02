@@ -2,9 +2,10 @@
 import Pkg
 using Combinatorics, DataFrames, LinearAlgebra, StatsBase, Base.Threads, Octavian
 
-function DAG_space_gen(n)
+function DAG_space_gen(n)    
     @assert n > 1 "Generates all possible DAGs for n > 1"
 
+    # Multithread across number of available cores that are in power of 2.
     nthreads = convert(Int, 2^(floor(log2(Threads.nthreads()))))
 
     m = binomial(n, 2)
@@ -29,8 +30,8 @@ function DAG_space_gen(n)
         threadID = nthreads > 1 ? Threads.threadid() : 1
 
         for i in chunks[threadID][1]:chunks[threadID][2]
-            base_matrix = convert.(Int8, fill(0, (n, n)))
-            z = reshape(repeat(1:n, n), (n, n,))
+            base_matrix = fill(Int8(0), (n, n))
+            z = reshape(repeat(Int8(1):Int8(n), n), (n, n,))
             upper_triangle = z .< z'
             base_matrix[upper_triangle] = collect(choices[i, :])
 
