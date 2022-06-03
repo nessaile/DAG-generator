@@ -8,7 +8,7 @@ function DAG_space_gen(n)
 
     m = binomial(n, 2)
     choices = repeat(collect.([Int8(0):Int8(1)]), m)
-    choices = Base.product(choices...) |> DataFrame
+    choices = Base.product(choices...) |> collect;
     nchoices = 2^m
     pvertex = permutations(Int8(1):Int8(n)) |> collect
     npvertex = factorial(n)
@@ -40,7 +40,7 @@ function DAG_space_gen(n)
         upper_triangle = z .< z'
 
         for i in chunks[threadID][1]:chunks[threadID][2]
-            base_matrix[upper_triangle] = collect(choices[i, :])
+            base_matrix[upper_triangle] = collect(choices[i])
 
             for j in 1:npvertex
                 candidate = matmul!(idmatrix[threadID][][:, pvertex[j]], base_matrix, idmatrix[threadID][][pvertex[j], :])
@@ -53,3 +53,4 @@ function DAG_space_gen(n)
 end
 
 @time x = DAG_space_gen(5)
+
