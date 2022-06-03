@@ -7,10 +7,10 @@ function DAG_space_gen(n)
     threads = Threads.nthreads()
 
     m = binomial(n, 2)
-    choices = repeat(collect.([0:1]), m)
+    choices = repeat(collect.([Int8(0):Int8(1)]), m)
     choices = Base.product(choices...) |> DataFrame
     nchoices = 2^m
-    pvertex = permutations(1:n) |> collect
+    pvertex = permutations(Int8(1):Int8(n)) |> collect
     npvertex = factorial(n)
     
     threads = threads >= nchoices ? threads = 1 : threads
@@ -38,7 +38,7 @@ function DAG_space_gen(n)
         base_matrix = fill(Int8(0), (n, n))
         z = reshape(repeat(Int8(1):Int8(n), n), (n, n,))
         upper_triangle = z .< z'
-        
+
         for i in chunks[threadID][1]:chunks[threadID][2]
             base_matrix[upper_triangle] = collect(choices[i, :])
 
@@ -52,4 +52,4 @@ function DAG_space_gen(n)
     return unique(reduce(vcat, adjc_matrix))
 end
 
-#@time x = DAG_space_gen(5)
+@time x = DAG_space_gen(5)
