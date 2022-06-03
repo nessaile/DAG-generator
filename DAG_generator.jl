@@ -5,9 +5,8 @@ using Combinatorics, DataFrames, LinearAlgebra, StatsBase, Base.Threads, Octavia
 function DAG_space_gen(n)    
     @assert n > 1 "Generates all possible DAGs for n > 1"
 
-    # Multithread across number of available cores that are in power of 2.
-    nthreads = convert(Int, 2^(floor(log2(Threads.nthreads()))))
-
+    nthreads = Threads.nthreads()
+    
     m = binomial(n, 2)
     choices = repeat(collect.([0:1]), m)
     choices = Base.product(choices...) |> DataFrame
@@ -16,14 +15,22 @@ function DAG_space_gen(n)
     npvertex = factorial(n)
     
     nthreads = nthreads >= nchoices ? nthreads = 1 : nthreads
-    multiple = convert(Int, nchoices / nthreads)
+    multiple = div(nchoices, nthreads)
 
     idmatrix = [[convert.(Int8, Matrix(1I, n, n))] for _ in 1:nthreads]
     adjc_matrix = [[convert.(Int8, Matrix(0I, n, n))] for _ in 1:nthreads]
 
     chunks = Matrix[[1 multiple]]
     for q in 2:nthreads
-        push!(chunks, [(chunks[q-1][2]+1) (multiple * (q))])
+        if size(chunks, 1) < nthreads - 1
+            push!(chunks, [(chunks[q-1][2]+1) (multiple * q)])
+        else
+            if  (multiple * nthreads) == nchoices
+                push!(chunks, [(chunks[q-1][2]+1) (multiple * q)])
+            else
+                push!(chunks, [(chunks[q-1][2]+1) ((multiple * q) + (nchoices - (multiple * q)))])
+            end
+        end
     end
 
     @threads for t in 1:nthreads
@@ -45,4 +52,4 @@ function DAG_space_gen(n)
     return unique(reduce(vcat, adjc_matrix))
 end
 
-@time x = DAG_space_gen(5)
+#@time x = DAG_space_gen(5)
