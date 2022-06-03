@@ -1,6 +1,5 @@
-
 import Pkg
-using Combinatorics, DataFrames, LinearAlgebra, StatsBase, Base.Threads, Octavian
+using Combinatorics, LinearAlgebra, Base.Threads, Octavian
 
 function DAG_space_gen(n)    
     @assert n > 1 "Generates all possible DAGs for n > 1"
@@ -53,4 +52,3 @@ function DAG_space_gen(n)
 end
 
 @time x = DAG_space_gen(5)
-
