@@ -1,7 +1,7 @@
 import Pkg
 using Combinatorics, LinearAlgebra, Base.Threads, Octavian
 
-function DAG_space_gen(n)    
+function DAG_space_gen(n)
     @assert n > 1 "Generates all possible DAGs for n > 1"
 
     threads = Threads.nthreads()
