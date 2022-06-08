@@ -1,3 +1,4 @@
+
 import Pkg
 using Combinatorics, LinearAlgebra, Base.Threads, Octavian, Chain
 
@@ -15,7 +16,6 @@ function DAG_space_gen(n)
     
     threads = threads >= nchoices ? threads = 1 : threads
 
-    idmatrix = [[convert.(Int8, Matrix(1I, n, n))] for _ in 1:threads]
     adjc_matrix = [[convert.(Int8, Matrix(0I, n, n))] for _ in 1:threads]
 
     multiple = div(nchoices, threads)
@@ -35,6 +35,7 @@ function DAG_space_gen(n)
     @threads for t in 1:threads
         threadID = threads > 1 ? Threads.threadid() : 1
         
+        idmatrix = [convert.(Int8, Matrix(1I, n, n))][]
         base_matrix = fill(Int8(0), (n, n))
         upper_triangle = @chain reshape(repeat(Int8(1):Int8(n), n), (n, n)) _ .< _'
 
@@ -42,7 +43,7 @@ function DAG_space_gen(n)
             base_matrix[upper_triangle] = collect(choices[i])
 
             for j in 1:npvertex
-                candidate = matmul!(idmatrix[threadID][][:, pvertex[j]], base_matrix, idmatrix[threadID][][pvertex[j], :])
+                candidate = matmul!(idmatrix[:, pvertex[j]], base_matrix, idmatrix[pvertex[j], :])
                 push!(adjc_matrix[threadID], candidate)
             end
         end
