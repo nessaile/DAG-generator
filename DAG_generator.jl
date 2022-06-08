@@ -15,7 +15,6 @@ function DAG_space_gen(n)
     
     threads = threads >= nchoices ? threads = 1 : threads
 
-    base_matrix = fill(Int8(0), (n, n))
     idmatrix = [[convert.(Int8, Matrix(1I, n, n))] for _ in 1:threads]
     adjc_matrix = [[convert.(Int8, Matrix(0I, n, n))] for _ in 1:threads]
 
@@ -35,7 +34,8 @@ function DAG_space_gen(n)
 
     @threads for t in 1:threads
         threadID = threads > 1 ? Threads.threadid() : 1
-
+        
+        base_matrix = fill(Int8(0), (n, n))
         upper_triangle = @chain reshape(repeat(Int8(1):Int8(n), n), (n, n)) _ .< _'
 
         for i in chunks[threadID][1]:chunks[threadID][2]
