@@ -8,9 +8,9 @@ $$ a_n \sim (1.741..)\cdot n!\cdot 2^{n(n-1)/2}\cdot (1.488..)^{-n} $$
 
 This implies that, enumerating all DAGs might be impractical, even unfeasible, for relative small number of nodes. 
 
-- For $n=11$, $a_n\approx 10^{7.7} > 10^{7.5} =$ the number of seconds in a year
-- For $n=21$, $a_n\approx 10^{19} > 10^{18.9} =$ computational limit of a 64-bit CPU
-- For $n=31$, $a_n\approx 10^{31} > 10^{30.6} =$ the number of bacterial cells on Earth [^4]
+- For $n=7$, $a_n\approx 10^{9.1} > 10^{7.5} =$ the number of seconds in a year
+- For $n=11$, $a_n\approx 10^{22.5} > 10^{19.3} =$ computational limit of a 64-bit CPU
+- For $n=13$, $a_n\approx 10^{31.3} > 10^{30.6} =$ the number of bacterial cells on Earth [^4]
 
 The sequence $\\{a_n\\}$ is registered in the _On-Line Encyclopedia of Integer Sequences_ as [A003024](https://oeis.org/A003024).
 
