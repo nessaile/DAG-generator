@@ -14,7 +14,7 @@ This implies that, enumerating all DAGs might be impractical, even unfeasible, f
 
 The sequence $\\{a_n\\}$ is registered in the _On-Line Encyclopedia of Integer Sequences_ as [A003024](https://oeis.org/A003024).
 
-[^1]: Koller, D., Friedman, N. (2009). [_Probabilistic Graphical Models: Principles and Techniques_](https://mitpress.mit.edu/books/probabilistic-graphical-models). MIT Press. ISBN: 9780262013192
-[^2]: Pearl, J. (1993). [_Aspects Of Graphical Models Connected With Causality_](https://escholarship.org/content/qt9zx0h8k6/qt9zx0h8k6.pdf). In Proceedings of the 49th Session of the International Statistical Institute.
+[^1]: Koller, D., Friedman, N. (2009). [_Probabilistic graphical models: principles and techniques_](https://mitpress.mit.edu/books/probabilistic-graphical-models). MIT Press. ISBN: 9780262013192
+[^2]: Pearl, J. (1993). [_Aspects of graphical models connected with causality_](https://escholarship.org/content/qt9zx0h8k6/qt9zx0h8k6.pdf). In Proceedings of the 49th Session of the International Statistical Institute.
 [^3]: McKay, B., Royle, G., Wanless, I., Oggier, F., Sloane, N., Wilf, H. (2004), [_Acyclic digraphs and eigenvalues of (0,1)-matrices_](https://cs.uwaterloo.ca/journals/JIS/VOL7/Sloane/sloane15.html), Journal of Integer Sequences, 7: 33, 
 [^4]:  Flemming, H., Wuertz, S. (2019). [_Bacteria and archaea on Earth and their abundance in biofilms_](https://www.nature.com/articles/s41579-019-0158-9). Nature Reviews. Microbiology. 17 (4): 247–260. doi:10.1038/s41579-019-0158-9. PMID 30760902. S2CID 61155774
