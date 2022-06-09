@@ -1,6 +1,6 @@
 # Sampling methods for Directed Acyclic Graphs (DAGs)
 
-A directed acyclic graph, or DAG, over a set of nodes $\mathcal{X}=\\{1,\cdots,n\\}$ is a digraph over $\mathcal{X}$ with no cylces. This is, all of its edges are directed and no path forms a closed loop. DAGs are relevant in probabilistic modeling and causal inference, as they can economically encode the set of conditional independence statements among the random variables in a Bayesian network [^1]. In particular, DAGs can be used to facilitate quantitative predictions of the effect of external interventions on such networks [^2].
+A directed acyclic graph, or DAG, over a set of nodes $\mathcal{X}=\\{1,\cdots,n\\}$ is a digraph over $\mathcal{X}$ with no cycles. This is, all of its edges are directed and no path forms a closed loop. DAGs are relevant in probabilistic modeling and causal inference, as they can economically encode the set of conditional independence statements among the random variables in a Bayesian network [^1]. In particular, DAGs can be used to facilitate quantitative predictions of the effect of external interventions on such networks [^2].
 
 The number of different DAGs with $n$ labelled nodes, $a_n$, grows super-exponentially with $n$ [^3]. Its assymptotic behavior is:
 
