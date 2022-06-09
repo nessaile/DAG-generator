@@ -16,7 +16,7 @@ The sequence $\\{a_n\\}$ is registered in the _On-Line Encyclopedia of Integer S
 
 ### Uniform sampling over the population of DAGs with _n_ nodes
 
-For the small $n$ case, it is feasible to enlist the entire population of DAGs, as every adjacency matrix $A_G$ is congruent with an upper-triangular matrix with entries in $\mathbb{B}=\\{0,1\\}$. If $P_\pi$ is the matrix representation of a permutation $\pi$ on labels, and $U$ is an upper-triangular matrix in $\mathbb{B}^{n\times n}$, then for some DAG $G$ we have that $A_G = P_\pi^\top U P_\pi$
+For the small $n$ case, it is feasible to enlist the entire population of DAGs, as every adjacency matrix $A_G$ is congruent with an upper-triangular matrix with entries in $\mathbb{B}=\\{0,1\\}$. If $P_\pi$ is the matrix representation of a permutation $\pi$ on labels, and $U$ is an upper-triangular matrix in $\mathbb{B}^{n\times n}$, then for some DAG $G$ we have that $A_G = P_\pi^\top U P_\pi$. Yet, different combinations of all possible $\pi$ and $U$ would generate the same $A_G$. This implies that a list containing all possible outputs of $P_\pi^\top U P_\pi$ would contain multiple copies of the same DAGs.
 
 
 
