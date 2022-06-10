@@ -14,7 +14,7 @@ function DAG_space_gen(n)
     pvertex = permutations(Int8(1):Int8(n)) |> collect
     npvertex = factorial(n)
     
-    threads = threads >= nchoices ? threads = 1 : threads
+    threads = threads >= nchoices ? 1 : threads
 
     adjc_matrix = [[convert.(Int8, Matrix(0I, n, n))] for _ in 1:threads]
 
