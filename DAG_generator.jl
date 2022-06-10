@@ -43,7 +43,7 @@ function DAG_space_gen(n)
             base_matrix[upper_triangle] = collect(choices[i])
 
             for j in 1:npvertex
-                candidate = matmul!(idmatrix[:, pvertex[j]], base_matrix, idmatrix[pvertex[j], :])
+                candidate = matmul(idmatrix[pvertex[j], :], base_matrix)
                 push!(adjc_matrix[threadID], candidate)
             end
         end
